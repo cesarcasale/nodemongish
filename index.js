@@ -13,11 +13,7 @@ app.use(express.json());
 
 //CLOUDINARY
 
-cloudinary.config({
-    cloud_name: 'cesarcasaleapi',
-    api_key: '259215249671579',
-    api_secret: 'a5p5MaADsKpvubM0OK2aU4M24DY'
-});
+
 
 connectDb()
 
