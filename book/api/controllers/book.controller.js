@@ -81,7 +81,6 @@ const putBook = async (req, res) => {
         putBook._id = id;
         const bookpath =  req.file.path;
         if(req.file){
-            console.log("putBook")
             //putBook.image
         }
         if (bookpath) {
