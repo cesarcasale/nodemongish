@@ -7,9 +7,9 @@ const bookSchema = new Schema({
     author: {type: String, required:true},
     genre: {type: String, required:true},
     year: {type: Number},
-    img: { type: String, default: "" },
-    user: [{type: Schema.ObjectId, ref: "user"}],
-    library: [{type: Schema.ObjectId, ref: "library"}],
+    image: { type: String, default: "" },
+    user: {type: Schema.ObjectId, ref: "user"},
+    library: {type: Schema.ObjectId, ref: "library"},
 },{
     
     timestamps:true, //genere una fecha de creacion y de mod auto.

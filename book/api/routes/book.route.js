@@ -5,7 +5,7 @@ const {getBook, postBook, getBookById, getBookByTitle, getBookByGenre, getBookBy
 const route = express.Router()
 const upload = require("../../../middleware/upload.file");
 
-route.get("/", getBook)
+route.get("/allbooks", getBook)
 
 route.get("/byId/:id", getBookById)
 
@@ -13,11 +13,11 @@ route.get("/byName/:name", getBookByTitle)
 
 route.get("/byType/:type", getBookByGenre)
 
-route.get("/byYear", getBookByYear)
+route.get("/byYear/:year", getBookByYear)
 
-route.post("/uploadBook", [isAdminAuth], upload.single("image"), postBook)
+route.post("/uploadBook", [isAdminAuth], postBook)
 
-route.put("/updateBook/:id", [isAdminAuth], putBook)
+route.put("/updateBook/:id", [isAdminAuth], upload.single("image"), putBook)
 
 route.delete("/deleteBook/:id", [isAdminAuth], deleteBook)
 

@@ -48,17 +48,17 @@ const getBookByGenre = async (req, res)=>{
         return res.status(500).json(error);
     }
 };
-//expireDate
-const getBookByYear = async (req, res)=>{
+//byDate
+const getBookByYear = async (req, res) => {
     try {
-        const bookByYear = await Book.find({year})
-        if (!bookByYear){
-        return res.status(404).json({message: "there's no book from this year"})
-
-    } else{
-        return res.status(200).json(bookByYear)
-
-    }
+        const { year } = req.params;
+        const bookByYear = await Book.find({ year: { $gte: year } });
+        
+        if (bookByYear.length === 0) {
+            return res.status(404).json({ message: "No hay libros de este año o posteriores" });
+        } else {
+            return res.status(200).json(bookByYear);
+        }
     } catch (error) {
         return res.status(500).json(error);
     }
@@ -68,24 +68,34 @@ const postBook = async(req, res) =>{
         try {
             const newBook = new Book(req.body);
             const createBook = await newBook.save();
-            
             return res.status(201).json(createBook)
         } catch (error) {
         return res.status(201).json(error)
         }
     };
 //put
-const putBook =async (req, res) => {
+const putBook = async (req, res) => {
     try {
         const { id } = req.params;
         const putBook = new Book(req.body);
         putBook._id = id;
+        const bookpath =  req.file.path;
+        if(req.file){
+            console.log("putBook")
+            //putBook.image
+        }
+        if (bookpath) {
+            const createdBook = await Book.findByIdAndUpdate(id,{img:bookpath});
+            //console.log(bookpath)
+            return res.json(createdBook)
+        }
         const updateBook = await Book.findByIdAndUpdate(id, putBook, {
-            new:true,
+            new: true,
         });
-        return res.status(200).json(updateBook)
+        return res.status(200).json(updateBook);
     } catch (error) {
-        return res.status(500).json(error)
+        console.log(error)
+        return res.status(500).json(error);
     }
 };
 //delete
